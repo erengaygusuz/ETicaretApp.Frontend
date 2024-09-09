@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '**', redirectTo: '/login' },
   {
     path: 'login',
     loadComponent: () =>
@@ -15,6 +14,11 @@ export const routes: Routes = [
       import('./components/auth/components/register/register.component').then(
         (c) => c.RegisterComponent
       ),
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
   {
     path: '',
