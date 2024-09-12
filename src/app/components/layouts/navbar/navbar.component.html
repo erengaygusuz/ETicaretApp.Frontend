@@ -51,7 +51,11 @@
           {{ _basket.count }}
         </span>
       </button>
-      <button class="btn btn-outline-danger mx-1" type="button">
+      <button
+        (click)="logOut()"
+        class="btn btn-outline-danger mx-1"
+        type="button"
+      >
         Çıkış Yap
       </button>
     </div>

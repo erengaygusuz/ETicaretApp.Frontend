@@ -17,11 +17,6 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
-  },
-  {
-    path: '',
     loadComponent: () =>
       import('./components/layouts/layouts.component').then(
         (c) => c.LayoutsComponent

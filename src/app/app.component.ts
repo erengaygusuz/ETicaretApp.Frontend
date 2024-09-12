@@ -6,7 +6,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, NgxSpinnerModule],
-  template: `<router-outlet></router-outlet>
+  template: `
+    <router-outlet></router-outlet>
 
     <ngx-spinner
       bdColor="rgba(0, 0, 0, 0.8)"
@@ -15,6 +16,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
       type="ball-clip-rotate"
       [fullScreen]="true"
       ><p style="color: white">Lütfen bekleyiniz...</p></ngx-spinner
-    > `,
+    >
+  `,
 })
 export class AppComponent {}
