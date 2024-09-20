@@ -1,4 +1,6 @@
+import { importProvidersFrom } from '@angular/core';
 import { Routes } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 export const routes: Routes = [
   {
@@ -7,6 +9,7 @@ export const routes: Routes = [
       import('./components/auth/components/login/login.component').then(
         (c) => c.LoginComponent
       ),
+    providers: [importProvidersFrom(TranslateModule.forRoot({}))],
   },
   {
     path: 'register',
@@ -14,6 +17,7 @@ export const routes: Routes = [
       import('./components/auth/components/register/register.component').then(
         (c) => c.RegisterComponent
       ),
+    providers: [importProvidersFrom(TranslateModule.forRoot({}))],
   },
   {
     path: '',
@@ -21,6 +25,7 @@ export const routes: Routes = [
       import('./components/layouts/layouts.component').then(
         (c) => c.LayoutsComponent
       ),
+    providers: [importProvidersFrom(TranslateModule.forRoot({}))],
     children: [
       {
         path: '',

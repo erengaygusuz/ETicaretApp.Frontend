@@ -1,4 +1,7 @@
-<app-blank title="Ürünler" sectionTitle="Ürünler Listesi">
+<app-blank
+  [title]="'products.Title' | translate"
+  [sectionTitle]="'products.SectionTitle' | translate"
+>
   <!-- Ekleme ve Search -->
   <div class="form-group">
     <button class="btn btn-outline-primary" routerLink="/products/add">
@@ -9,7 +12,7 @@
         class="form-control"
         type="search"
         [(ngModel)]="request.search"
-        placeholder="Aranacak değeri yazın..."
+        [placeholder]="'products.Search' | translate"
         (keyup)="search()"
         (search)="getAll(1)"
       />
@@ -18,17 +21,18 @@
   <!-- Ekleme ve Search -->
 
   <!-- Liste -->
+
   <app-table
     [heads]="[
       '#',
-      'Ürün Resmi',
-      'Ürün Adı',
-      'Kategoriler',
-      'Stok Bilgisi',
-      'Birim Fiyatı',
-      'Oluştulma Tarihi',
-      'Aktif/Pasif',
-      'İşlemler'
+      'products.ProductImage' | translate,
+      'products.ProductName' | translate,
+      'products.ProductCategories' | translate,
+      'products.ProductStock' | translate,
+      'products.Price' | translate,
+      'products.CreatedDate' | translate,
+      'products.IsActive' | translate,
+      'products.Operations' | translate
     ]"
   >
     <tr *ngFor="let product of result.datas; let index = index">
@@ -56,7 +60,11 @@
           [ngClass]="product.isActive ? 'btn-danger' : 'btn-primary'"
           (click)="changeProductStatus(product._id)"
         >
-          {{ product.isActive ? "Pastif Yap" : "Aktif Yap" }}
+          {{
+            product.isActive
+              ? ("products.Deactivate" | translate)
+              : ("products.Activate" | translate)
+          }}
         </button>
       </td>
       <td>
@@ -99,10 +107,14 @@
   <nav style="float: right">
     <ul class="pagination">
       <li class="page-item" [ngClass]="result.isFirstPage ? 'disabled' : ''">
-        <a class="page-link" (click)="getAll(1)">İlk</a>
+        <a class="page-link" (click)="getAll(1)">{{
+          "products.First" | translate
+        }}</a>
       </li>
       <li class="page-item" [ngClass]="result.isFirstPage ? 'disabled' : ''">
-        <a class="page-link" (click)="getAll(request.pageNumber - 1)">Önceki</a>
+        <a class="page-link" (click)="getAll(request.pageNumber - 1)">{{
+          "products.Previous" | translate
+        }}</a>
       </li>
       <li class="page-item" *ngFor="let p of pageNumbers">
         <a
@@ -113,12 +125,14 @@
         >
       </li>
       <li class="page-item" [ngClass]="result.isLastPage ? 'disabled' : ''">
-        <a class="page-link" (click)="getAll(request.pageNumber - 1)"
-          >Sonraki</a
-        >
+        <a class="page-link" (click)="getAll(request.pageNumber - 1)">{{
+          "products.Next" | translate
+        }}</a>
       </li>
       <li class="page-item" [ngClass]="result.isLastPage ? 'disabled' : ''">
-        <a class="page-link" (click)="getAll(result.totalPageCount)">Son</a>
+        <a class="page-link" (click)="getAll(result.totalPageCount)">{{
+          "products.Last" | translate
+        }}</a>
       </li>
     </ul>
   </nav>

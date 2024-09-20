@@ -1,4 +1,8 @@
-<app-blank title="Ana Sayfa" sectionTitle="Ürünler">
+<!-- <app-blank title="Ana Sayfa" sectionTitle="Ürünler"> -->
+<app-blank
+  [title]="'home.HomePage' | translate"
+  [sectionTitle]="'home.products' | translate"
+>
   <div class="row">
     <div class="col-md-3 cerceve">
       <ul>
@@ -6,7 +10,7 @@
           (click)="changeCategory('', 'Tümü')"
           [ngClass]="request.categoryName == 'Tümü' ? 'active' : ''"
         >
-          Tümü
+          {{ "home.All" | translate }}
         </li>
         <li
           (click)="changeCategory(category._id, category.name)"
@@ -21,25 +25,32 @@
       <div class="form-group">
         <div class="row">
           <div class="col-md-7">
-            <label>Arama</label>
+            <label> {{ "home.Search" | translate }}</label>
             <input
               [(ngModel)]="request.search"
               type="search"
               class="form-control"
-              placeholder="Aranacak değeri yazın..."
+              [placeholder]="'products.Search' | translate"
             />
           </div>
           <div class="col-md-3">
-            <label>Fiyat Sıralaması</label>
+            <label>{{ "home.PriceRanking" | translate }}</label>
             <select [(ngModel)]="request.priceFilter" class="form-control">
-              <option value="0">Seçim yapınız...</option>
-              <option value="1">Artan Fiyat</option>
-              <option value="-1">Azalayan Fiyat</option>
+              <option value="0">{{ "home.Choice" | translate }}</option>
+              <option value="1">
+                {{ "home.IncreasingPrice" | translate }}
+              </option>
+              <option value="-1">
+                {{ "home.DecreasingPrice" | translate }}
+              </option>
             </select>
           </div>
           <div class="col-md-2">
-            <label>İşlemler</label><br />
-            <button (click)="getAll()" class="btn btn-primary">Getir</button>
+            <label> {{ "products.Operations" | translate }}</label
+            ><br />
+            <button (click)="getAll()" class="btn btn-primary">
+              {{ "home.List" | translate }}
+            </button>
           </div>
         </div>
       </div>
@@ -58,18 +69,22 @@
                 height="160"
               />
               <p>
-                <strong>Kalan Adet: {{ product.stock }}</strong>
+                <strong>
+                  {{ "home.RemainingQuantity" | translate }}
+                  {{ product.stock }}</strong
+                >
               </p>
               <hr />
               <h4 class="alert alert-danger">
-                Adet Fiyatı: {{ product.price | trCurrency : "₺" }}
+                {{ "products.Price" | translate }}
+                {{ product.price | trCurrency : "₺" }}
               </h4>
               <button
                 (click)="addBasket(product._id, product.price)"
                 *ngIf="product.stock > 0"
                 class="btn btn-outline-success w-100"
               >
-                Sepete Ekle
+              {{ "home.AddBasket" | translate }}
               </button>
             </div>
           </div>

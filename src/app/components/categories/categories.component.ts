@@ -6,6 +6,15 @@ import { CategoryService } from './services/category.service';
 import { NgForm } from '@angular/forms';
 import { SwalService } from '../../common/services/swal.service';
 import { CategoryPipe } from './pipes/category.pipe';
+import { LayoutsComponent } from '../layouts/layouts.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { NavbarComponent } from '../layouts/navbar/navbar.component';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, '/i18n/', '.json');
+}
 
 @Component({
   selector: 'app-categories',
@@ -22,12 +31,20 @@ export class CategoriesComponent implements OnInit {
   constructor(
     private _toastr: ToastrService,
     private _category: CategoryService,
-    private _swal: SwalService
+    private _swal: SwalService,
+    private translate: TranslateService
   ) {}
+
   ngOnInit(): void {
     this.getAll();
+    const defaultLang = localStorage.getItem('language') || 'en';
+    this.translate.setDefaultLang(defaultLang);
+    this.translate.use(defaultLang);
   }
-
+  changeLanguage(lang: string) {
+    this.translate.use(lang);
+    localStorage.setItem('language', lang);
+  }
   getAll() {
     this._category.getAll((res) => (this.categories = res));
   }
@@ -60,12 +77,16 @@ export class CategoriesComponent implements OnInit {
   }
   removeById(model: CategoryModel) {
     this._swal.callSwal(
-      `${model.name} kategorisini silmek istiyor musunuz ?`,
+      this.translate.instant('categories.confirmDelete', { name: model.name }),
       '',
-      'Sil',
+      this.translate.instant('categories.deleteButton'),
       () => {
         this._category.removeById(model._id, (res) => {
-          this._toastr.info(res.message);
+          this._toastr.info(
+            this.translate.instant('categories.deleted', {
+              message: res.message,
+            })
+          );
           this.getAll();
         });
       }

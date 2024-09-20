@@ -7,6 +7,13 @@ import { CategoryService } from '../../../categories/services/category.service';
 import { ProductService } from '../../services/product.service';
 import { SharedModule } from '../../../../common/shared/shared.module';
 import { ProductModel } from '../../models/product.model';
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, '/i18n/', '.json');
+}
 
 @Component({
   selector: 'app-product-update',
@@ -27,7 +34,8 @@ export class ProductUpdateComponent implements OnInit {
     private _toastr: ToastrService,
     private _product: ProductService,
     private _router: Router,
-    private _activated: ActivatedRoute
+    private _activated: ActivatedRoute,
+    public translate: TranslateService
   ) {
     this._activated.params.subscribe((res) => {
       this.productId = res['value'];
@@ -36,6 +44,15 @@ export class ProductUpdateComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getCategories();
+
+    const defaultLang = localStorage.getItem('language') || 'tr';
+    this.translate.setDefaultLang(defaultLang);
+    this.translate.use(defaultLang);
+  }
+
+  changeLanguage(lang: string) {
+    this.translate.use(lang);
+    localStorage.setItem('language', lang);
   }
 
   getById() {
