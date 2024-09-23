@@ -1,7 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../../common/shared/shared.module';
 import { BasketService } from '../../baskets/services/basket.service';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, '/i18n/', '.json');
+}
 
 @Component({
   selector: 'app-navbar',
@@ -11,8 +18,21 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
-  constructor(public _basket: BasketService, private _router: Router) {
-    this._basket.getCount();
+  constructor(
+    public _basket: BasketService,
+    private _router: Router,
+    public translate: TranslateService
+  ) {}
+  languages = ['tr', 'en'];
+  defaultLang = '';
+  ngOnInit(): void {
+    const defaultLang = localStorage.getItem('language') || 'tr';
+    this.translate.setDefaultLang(defaultLang);
+    this.translate.use(defaultLang);
+  }
+  changeLanguage(lang: string) {
+    this.translate.use(lang);
+    localStorage.setItem('language', lang);
   }
 
   logOut() {

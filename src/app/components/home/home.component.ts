@@ -8,13 +8,19 @@ import { ProductModel } from '../products/models/product.model';
 import { BasketModel } from '../baskets/models/basket.model';
 import { BasketService } from '../baskets/services/basket.service';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, '/i18n/', '.json');
+}
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [SharedModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
   categories: CategoryModel[] = [];
@@ -25,11 +31,22 @@ export class HomeComponent implements OnInit {
     private _category: CategoryService,
     private _product: ProductService,
     private _basket: BasketService,
-    private _toastr: ToastrService
+    private _toastr: ToastrService,
+    private translate: TranslateService
   ) {}
+
   ngOnInit(): void {
+    const defaultLang = localStorage.getItem('language') || 'en';
+    this.translate.setDefaultLang(defaultLang);
+    this.translate.use(defaultLang);
+
     this.getCategories();
     this.getAll();
+  }
+
+  changeLanguage(lang: string) {
+    this.translate.use(lang);
+    localStorage.setItem('language', lang);
   }
 
   // ürün işlemleri

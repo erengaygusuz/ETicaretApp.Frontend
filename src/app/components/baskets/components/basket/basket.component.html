@@ -1,15 +1,19 @@
-<app-blank title="Sepetim" sectionTitle="Sepetteki Ürünler">
+<!-- <app-blank title="Sepetim" sectionTitle="Sepetteki Ürünler"> -->
+<app-blank
+  [title]="'basket.Title' | translate"
+  [sectionTitle]="'basket.SectionTitle' | translate"
+>
   <div class="row">
     <div class="col-md-9">
       <app-table
         [heads]="[
           '#',
-          'Ürün Resmi',
-          'Ürün Adı',
-          'Adet',
-          'Birim Fiyatı',
-          'Toplam Tutar',
-          'İşlemler'
+          'products.ProductImage' | translate,
+          'products.ProductName' | translate,
+          'order.Quantity' | translate,
+          'products.Price' | translate,
+          'order.TotalAmount' | translate,
+          'products.Operations' | translate
         ]"
       >
         <tr *ngFor="let basket of baskets; let index = index">
@@ -42,13 +46,15 @@
       </app-table>
     </div>
     <div class="col-md-3" style="border: 1px solid #ccc; padding: 10px">
-      <h3 class="alert alert-danger">Ödenecek: {{ sum | trCurrency }} ₺</h3>
+      <h3 class="alert alert-danger">
+        {{ "basket.Payable" | translate }} {{ sum | trCurrency }} ₺
+      </h3>
       <button
         (click)="createOrder()"
         *ngIf="baskets.length > 0"
         class="btn btn-danger w-100"
       >
-        Ödeme Yap
+        {{ "basket.MakePayment" | translate }}
       </button>
     </div>
   </div>

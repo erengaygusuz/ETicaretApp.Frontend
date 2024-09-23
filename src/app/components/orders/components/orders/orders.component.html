@@ -1,13 +1,16 @@
-<app-blank title="Siparişlerim" sectionTitle="Sipariş Listem">
+<app-blank
+  [title]="'order.MyOrder' | translate"
+  [sectionTitle]="'order.OrderList' | translate"
+>
   <app-table
     [heads]="[
       '#',
-      'Sipariş Tarihi',
-      'Ürün Resmi',
-      'Ürün Adı',
-      'Adet',
-      'Birim Fiyatı',
-      'Toplam Tutar'
+      'order.OrderDate' | translate,
+      'order.ProductImage' | translate,
+      'order.ProductName' | translate,
+      'order.Quantity' | translate,
+      'order.UnitPrice' | translate,
+      'order.TotalAmount' | translate
     ]"
   >
     <tr *ngFor="let order of orders; let index = index">

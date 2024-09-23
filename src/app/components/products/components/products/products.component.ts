@@ -6,6 +6,13 @@ import { ProductService } from '../../services/product.service';
 import { SwalService } from '../../../../common/services/swal.service';
 import { ToastrService } from 'ngx-toastr';
 import { SharedModule } from '../../../../common/shared/shared.module';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, '/i18n/', '.json');
+}
 
 @Component({
   selector: 'app-products',
@@ -25,11 +32,19 @@ export class ProductsComponent implements OnInit {
   constructor(
     private _product: ProductService,
     private _swal: SwalService,
-    private _toastr: ToastrService
+    private _toastr: ToastrService,
+    public translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.getAll();
+    const defaultLang = localStorage.getItem('language') || 'tr';
+    this.translate.setDefaultLang(defaultLang);
+    this.translate.use(defaultLang);
+  }
+  changeLanguage(lang: string) {
+    this.translate.use(lang);
+    localStorage.setItem('language', lang);
   }
 
   // ürünlerin sayfalanmış listesini alır
@@ -61,13 +76,15 @@ export class ProductsComponent implements OnInit {
 
   removeById(id: string) {
     this._swal.callSwal(
-      'Ürünü silmek istiyor musunuz?',
-      'Ürünü Sil',
-      'Sil',
+      this.translate.instant('products.confirmDelete'),
+      this.translate.instant('products.deleteProduct'),
+      this.translate.instant('products.deleteButton'),
       () => {
         let model = { _id: id };
         this._product.removeById(model, (res) => {
-          this._toastr.info(res.message);
+          this._toastr.info(
+            this.translate.instant('product.deleted', { message: res.message })
+          );
           this.getAll(this.request.pageNumber);
         });
       }

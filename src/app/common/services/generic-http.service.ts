@@ -8,8 +8,6 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class GenericHttpService {
-  //api: string = 'http://localhost:5000/api';
-
   api: string = environment.apiUrl;
 
   constructor(

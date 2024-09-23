@@ -6,6 +6,13 @@ import { CategoryModel } from '../../../categories/models/category.model';
 import { ToastrService } from 'ngx-toastr';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateService } from '@ngx-translate/core';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, '/i18n/', '.json');
+}
 
 @Component({
   selector: 'app-product-add',
@@ -23,10 +30,20 @@ export class ProductAddComponent implements OnInit {
     private _category: CategoryService,
     private _toastr: ToastrService,
     private _product: ProductService,
-    private _router: Router
+    private _router: Router,
+    public translate: TranslateService
   ) {}
   ngOnInit(): void {
     this.getCategories();
+
+    const defaultLang = localStorage.getItem('language') || 'tr';
+    this.translate.setDefaultLang(defaultLang);
+    this.translate.use(defaultLang);
+  }
+
+  changeLanguage(lang: string) {
+    this.translate.use(lang);
+    localStorage.setItem('language', lang);
   }
 
   getCategories() {

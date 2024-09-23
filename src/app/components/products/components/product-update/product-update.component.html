@@ -1,4 +1,7 @@
-<app-blank title="Ürün Güncelleme" sectionTitle="Ürün Güncelleme">
+<app-blank
+  [title]="'products.UpdateProduct' | translate"
+  [sectionTitle]="'products.UpdateProduct' | translate"
+>
   <div class="row center">
     <div class="col-md-6">
       <form
@@ -7,7 +10,7 @@
         (ngSubmit)="update(updateForm)"
       >
         <div class="form-group">
-          <label for="name">Ürün Adı</label>
+          <label for="name">{{ "products.ProductName" | translate }}</label>
           <input
             type="text"
             name="name"
@@ -20,11 +23,13 @@
             [appValid]="name.validity.valid"
           />
           <div class="invalid-feedback">
-            Ürün adı en az 3 karakter olmalıdır!
+            {{ "products.NameMessage" | translate }}
           </div>
         </div>
         <div class="form-group mt-2">
-          <label for="categoriesSelect">Kategoriler</label>
+          <label for="categoriesSelect">{{
+            "products.ProductCategories" | translate
+          }}</label>
           <select
             class="form-control"
             name="categoriesSelect"
@@ -39,7 +44,7 @@
           </select>
         </div>
         <div class="form-group mt-2">
-          <label for="stock">Stok Adedi</label>
+          <label for="stock">{{ "products.ProductStock" | translate }}</label>
           <input
             type="number"
             name="stock"
@@ -51,10 +56,12 @@
             class="form-control"
             [appValid]="stock.validity.valid"
           />
-          <div class="invalid-feedback">Ürün stok adedi en az 1 olmalıdır!</div>
+          <div class="invalid-feedback">
+            {{ "products.StockMessage" | translate }}
+          </div>
         </div>
         <div class="form-group mt-2">
-          <label for="price">Birim Fiyatı</label>
+          <label for="price">{{ "products.Price" | translate }}</label>
           <input
             type="number"
             name="price"
@@ -67,11 +74,11 @@
             [appValid]="price.validity.valid"
           />
           <div class="invalid-feedback">
-            Ürün birim fiyatı en az 1 olmalıdır!
+            {{ "products.PriceMessage" | translate }}
           </div>
         </div>
         <div class="form-group mt-2">
-          <label for="images">Ürün Resimleri</label>
+          <label for="images">{{ "products.ProductImages" | translate }}</label>
           <input
             type="file"
             name="images"
@@ -84,7 +91,7 @@
         </div>
         <hr />
         <div class="form-group mt-2">
-          <p>Mevcut Resimler</p>
+          <p>{{ "products.AvailableImages" | translate }}</p>
           <span
             (click)="deleteImage(product._id, i)"
             *ngFor="let image of product.imageUrls; let i = index"
@@ -97,7 +104,9 @@
           </span>
         </div>
         <div class="form-group mt-2">
-          <button class="btn btn-warning w-100">Güncelle</button>
+          <button class="btn btn-warning w-100">
+            {{ "products.Update" | translate }}
+          </button>
         </div>
       </form>
     </div>

@@ -38,6 +38,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "allowedCommonJsDependencies": ["sweetalert2"],
             "baseHref": "/",
             "outputPath": "dist/frontend",
             "index": "src/index.html",

@@ -1,4 +1,7 @@
-<app-blank title="Kategoriler" sectionTitle="Kategori Listesi">
+<app-blank
+  [title]="'categories.title' | translate"
+  [sectionTitle]="'categories.sectionTitle' | translate"
+>
   <div class="form-group">
     <button
       class="btn btn-outline-primary"
@@ -12,12 +15,18 @@
         type="search"
         [(ngModel)]="search"
         class="form-control"
-        placeholder="Aranacak değeri yazın..."
+        [placeholder]="'products.Search' | translate"
       />
     </div>
   </div>
 
-  <app-table [heads]="['#', 'Kategori Adı', 'İşlemler']">
+  <app-table
+    [heads]="[
+      '#',
+      'categories.CategoryName' | translate,
+      'categories.Actions' | translate
+    ]"
+  >
     <tr
       *ngFor="
         let category of categories | categoryPipe : search;
@@ -57,7 +66,9 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="addModalLabel">Kategori Ekle</h1>
+        <h1 class="modal-title fs-5" id="addModalLabel">
+          {{ "categories.AddCategory" | translate }}
+        </h1>
         <button
           type="button"
           id="addModalCloseBtn"
@@ -69,7 +80,9 @@
       <form autocomplete="off" #addForm="ngForm" (ngSubmit)="add(addForm)">
         <div class="modal-body">
           <div class="form-group">
-            <label for="name">Kategori Adı</label>
+            <label for="name">
+              {{ "categories.CategoryName" | translate }}</label
+            >
             <input
               type="text"
               class="form-control"
@@ -89,9 +102,11 @@
             class="btn btn-secondary"
             data-bs-dismiss="modal"
           >
-            Kapat
+            {{ "categories.Close" | translate }}
           </button>
-          <button type="submit" class="btn btn-primary">Kaydet</button>
+          <button type="submit" class="btn btn-primary">
+            {{ "categories.Save" | translate }}
+          </button>
         </div>
       </form>
     </div>
@@ -111,7 +126,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="updateModalLabel">
-          Kategori Güncelle
+          {{ "categories.UpdateCategory" | translate }}
         </h1>
         <button
           type="button"
@@ -128,7 +143,9 @@
       >
         <div class="modal-body">
           <div class="form-group">
-            <label for="updateName">Kategori Adı</label>
+            <label for="updateName">
+              {{ "categories.CategoryName" | translate }}</label
+            >
             <input
               type="text"
               class="form-control"
@@ -148,9 +165,11 @@
             class="btn btn-secondary"
             data-bs-dismiss="modal"
           >
-            Kapat
+            {{ "categories.Close" | translate }}
           </button>
-          <button type="submit" class="btn btn-warning">Güncelle</button>
+          <button type="submit" class="btn btn-warning">
+            {{ "categories.Update" | translate }}
+          </button>
         </div>
       </form>
     </div>
