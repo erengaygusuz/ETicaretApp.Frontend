@@ -21,7 +21,7 @@ export class LayoutsComponent implements OnInit {
   constructor(public translate: TranslateService) {}
 
   ngOnInit(): void {
-    const defaultLang = localStorage.getItem('language') || 'tr';
+    const defaultLang = localStorage.getItem('language') || 'tr-TR';
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
   }

@@ -37,7 +37,7 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
-    const defaultLang = localStorage.getItem('language') || 'en';
+    const defaultLang = localStorage.getItem('language') || 'tr-TR';
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
   }

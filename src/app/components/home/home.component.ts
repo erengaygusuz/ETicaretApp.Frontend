@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const defaultLang = localStorage.getItem('language') || 'en';
+    const defaultLang = localStorage.getItem('language') || 'tr-TR';
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
 

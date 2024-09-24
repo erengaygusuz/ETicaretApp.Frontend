@@ -38,7 +38,7 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
-    const defaultLang = localStorage.getItem('language') || 'tr';
+    const defaultLang = localStorage.getItem('language') || 'tr-TR';
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
   }

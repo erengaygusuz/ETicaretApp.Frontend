@@ -26,7 +26,7 @@ export class OrdersComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this._order.getAll((res) => (this.orders = res));
-    const defaultLang = localStorage.getItem('language') || 'tr';
+    const defaultLang = localStorage.getItem('language') || 'tr-TR';
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
   }

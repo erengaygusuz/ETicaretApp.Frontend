@@ -50,7 +50,7 @@
         </li>
       </ul>
 
-      <div class="me-4">
+      <!-- <div class="me-4">
         <div class="dropdown">
           <button
             class="btn btn-outline-primary dropdown-toggle"
@@ -65,6 +65,27 @@
             <li *ngFor="let lang of languages">
               <a class="dropdown-item" href="#" (click)="changeLanguage(lang)">
                 {{ lang === "tr" ? "Türkçe" : "English" }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div> -->
+
+      <div class="me-4">
+        <div class="dropdown">
+          <button
+            class="btn btn-outline-primary dropdown-toggle"
+            type="button"
+            id="languageDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ defaultLang === "tr-TR" ? "Türkçe" : "English" }}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+            <li *ngFor="let lang of languages">
+              <a class="dropdown-item" href="#" (click)="changeLanguage(lang)">
+                {{ lang === "tr-TR" ? "Türkçe" : "English" }}
               </a>
             </li>
           </ul>

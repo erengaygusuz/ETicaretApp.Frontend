@@ -23,14 +23,15 @@ export class NavbarComponent {
     private _router: Router,
     public translate: TranslateService
   ) {}
-  languages = ['tr', 'en'];
+  languages = ['tr-TR', 'en-US'];
   defaultLang = '';
   ngOnInit(): void {
-    const defaultLang = localStorage.getItem('language') || 'tr';
+    const defaultLang = localStorage.getItem('language') || 'tr-TR';
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
   }
   changeLanguage(lang: string) {
+    this.defaultLang = lang;
     this.translate.use(lang);
     localStorage.setItem('language', lang);
   }

@@ -36,7 +36,7 @@ export class ProductAddComponent implements OnInit {
   ngOnInit(): void {
     this.getCategories();
 
-    const defaultLang = localStorage.getItem('language') || 'tr';
+    const defaultLang = localStorage.getItem('language') || 'tr-TR';
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
   }

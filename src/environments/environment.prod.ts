@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://e-ticaret-app-backend.vercel.app',
+  apiUrl: 'https://eticaretapp-backend-mx0u.onrender.com/api',
 };
