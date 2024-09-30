@@ -9,6 +9,7 @@ import { SharedModule } from '../../../../common/shared/shared.module';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '/i18n/', '.json');
@@ -28,12 +29,13 @@ export class ProductsComponent implements OnInit {
   request: RequestModel = new RequestModel();
   pageNumbers: number[] = [];
   product: ProductModel = new ProductModel();
+  imageUrl: string = '';
 
   constructor(
     private _product: ProductService,
     private _swal: SwalService,
     private _toastr: ToastrService,
-    public translate: TranslateService
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +43,7 @@ export class ProductsComponent implements OnInit {
     const defaultLang = localStorage.getItem('language') || 'tr-TR';
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
+    this.imageUrl = environment.imageUrl;
   }
   changeLanguage(lang: string) {
     this.translate.use(lang);
@@ -83,7 +86,7 @@ export class ProductsComponent implements OnInit {
         let model = { _id: id };
         this._product.removeById(model, (res) => {
           this._toastr.info(
-            this.translate.instant('product.deleted', { message: res.message })
+            this.translate.instant('products.deleted', { message: res.message })
           );
           this.getAll(this.request.pageNumber);
         });

@@ -31,7 +31,7 @@ export class ProductAddComponent implements OnInit {
     private _toastr: ToastrService,
     private _product: ProductService,
     private _router: Router,
-    public translate: TranslateService
+    private translate: TranslateService
   ) {}
   ngOnInit(): void {
     this.getCategories();

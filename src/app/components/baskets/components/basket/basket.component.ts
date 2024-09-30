@@ -8,6 +8,7 @@ import { OrderService } from '../../../orders/services/order.service';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from '../../../../../environments/environment';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '/i18n/', '.json');
@@ -23,13 +24,14 @@ export function HttpLoaderFactory(http: HttpClient) {
 export class BasketComponent implements OnInit {
   baskets: BasketModel[] = [];
   sum: number = 0;
+  imageUrl: string = '';
 
   constructor(
     private _basket: BasketService,
     private _toastr: ToastrService,
     private _swal: SwalService,
     private _order: OrderService,
-    public translate: TranslateService
+    private translate: TranslateService
   ) {}
   ngOnInit(): void {
     this.getAll();
@@ -37,6 +39,8 @@ export class BasketComponent implements OnInit {
     const defaultLang = localStorage.getItem('language') || 'tr-TR';
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
+
+    this.imageUrl = environment.imageUrl;
   }
 
   changeLanguage(lang: string) {

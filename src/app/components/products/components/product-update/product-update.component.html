@@ -96,11 +96,7 @@
             (click)="deleteImage(product._id, i)"
             *ngFor="let image of product.imageUrls; let i = index"
           >
-            <img
-              [src]="'http://localhost:5000/' + image.path"
-              width="100"
-              class="mx-1"
-            />
+            <img [src]="imageUrl + image.path" width="100" class="mx-1" />
           </span>
         </div>
         <div class="form-group mt-2">

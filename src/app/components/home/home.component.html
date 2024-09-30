@@ -1,4 +1,3 @@
-<!-- <app-blank title="Ana Sayfa" sectionTitle="Ürünler"> -->
 <app-blank
   [title]="'home.HomePage' | translate"
   [sectionTitle]="'home.products' | translate"
@@ -63,7 +62,7 @@
             </div>
             <div class="card-body">
               <img
-                [src]="'http://localhost:5000/' + product.imageUrls[0].path"
+                [src]="imageUrl + product.imageUrls[0].path"
                 alt=""
                 width="200"
                 height="160"
@@ -84,7 +83,7 @@
                 *ngIf="product.stock > 0"
                 class="btn btn-outline-success w-100"
               >
-              {{ "home.AddBasket" | translate }}
+                {{ "home.AddBasket" | translate }}
               </button>
             </div>
           </div>

@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { environment } from '../../../environments/environment';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '/i18n/', '.json');
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
   categories: CategoryModel[] = [];
   products: ProductModel[] = [];
   request: RequestModel = new RequestModel();
+  imageUrl: string = '';
 
   constructor(
     private _category: CategoryService,
@@ -42,6 +44,8 @@ export class HomeComponent implements OnInit {
 
     this.getCategories();
     this.getAll();
+
+    this.imageUrl = environment.imageUrl;
   }
 
   changeLanguage(lang: string) {

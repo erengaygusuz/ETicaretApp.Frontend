@@ -21,7 +21,7 @@ export class NavbarComponent {
   constructor(
     public _basket: BasketService,
     private _router: Router,
-    public translate: TranslateService
+    private translate: TranslateService
   ) {}
   languages = ['tr-TR', 'en-US'];
   defaultLang = '';

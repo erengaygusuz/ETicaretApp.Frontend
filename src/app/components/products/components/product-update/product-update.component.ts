@@ -10,6 +10,7 @@ import { ProductModel } from '../../models/product.model';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { environment } from '../../../../../environments/environment';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '/i18n/', '.json');
@@ -28,6 +29,7 @@ export class ProductUpdateComponent implements OnInit {
   imageUrls: any[] = [];
   productId: string = '';
   product: ProductModel = new ProductModel();
+  imageUrl: string = '';
 
   constructor(
     private _category: CategoryService,
@@ -35,7 +37,7 @@ export class ProductUpdateComponent implements OnInit {
     private _product: ProductService,
     private _router: Router,
     private _activated: ActivatedRoute,
-    public translate: TranslateService
+    private translate: TranslateService
   ) {
     this._activated.params.subscribe((res) => {
       this.productId = res['value'];
@@ -48,6 +50,7 @@ export class ProductUpdateComponent implements OnInit {
     const defaultLang = localStorage.getItem('language') || 'tr-TR';
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
+    this.imageUrl = environment.imageUrl;
   }
 
   changeLanguage(lang: string) {
