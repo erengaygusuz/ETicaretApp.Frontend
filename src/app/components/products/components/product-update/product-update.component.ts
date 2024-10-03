@@ -8,13 +8,8 @@ import { ProductService } from '../../services/product.service';
 import { SharedModule } from '../../../../common/shared/shared.module';
 import { ProductModel } from '../../models/product.model';
 import { TranslateService } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { environment } from '../../../../../environments/environment';
+import { Page } from '../../../../base/page';
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, '/i18n/', '.json');
-}
 
 @Component({
   selector: 'app-product-update',
@@ -23,13 +18,13 @@ export function HttpLoaderFactory(http: HttpClient) {
   templateUrl: './product-update.component.html',
   styleUrl: './product-update.component.css',
 })
-export class ProductUpdateComponent implements OnInit {
+export class ProductUpdateComponent extends Page implements OnInit {
   categories: CategoryModel[] = [];
   images: File[] = [];
   imageUrls: any[] = [];
   productId: string = '';
   product: ProductModel = new ProductModel();
-  imageUrl: string = '';
+
 
   constructor(
     private _category: CategoryService,
@@ -37,8 +32,10 @@ export class ProductUpdateComponent implements OnInit {
     private _product: ProductService,
     private _router: Router,
     private _activated: ActivatedRoute,
-    private translate: TranslateService
+    translate: TranslateService
   ) {
+    super(translate);
+
     this._activated.params.subscribe((res) => {
       this.productId = res['value'];
       this.getById();
@@ -46,18 +43,8 @@ export class ProductUpdateComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getCategories();
-
-    const defaultLang = localStorage.getItem('language') || 'tr-TR';
-    this.translate.setDefaultLang(defaultLang);
-    this.translate.use(defaultLang);
-    this.imageUrl = environment.imageUrl;
   }
-
-  changeLanguage(lang: string) {
-    this.translate.use(lang);
-    localStorage.setItem('language', lang);
-  }
-
+ 
   getById() {
     let model = { _id: this.productId };
     this._product.getById(model, (res) => (this.product = res));

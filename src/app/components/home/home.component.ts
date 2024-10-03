@@ -9,13 +9,8 @@ import { BasketModel } from '../baskets/models/basket.model';
 import { BasketService } from '../baskets/services/basket.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { environment } from '../../../environments/environment';
+import { Page } from '../../base/page';
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, '/i18n/', '.json');
-}
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -23,36 +18,25 @@ export function HttpLoaderFactory(http: HttpClient) {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent extends Page implements OnInit {
   categories: CategoryModel[] = [];
   products: ProductModel[] = [];
   request: RequestModel = new RequestModel();
-  imageUrl: string = '';
 
   constructor(
     private _category: CategoryService,
     private _product: ProductService,
     private _basket: BasketService,
     private _toastr: ToastrService,
-    private translate: TranslateService
-  ) {}
+    translate: TranslateService
+  ) {
+    super(translate);
+  }
 
   ngOnInit(): void {
-    const defaultLang = localStorage.getItem('language') || 'tr-TR';
-    this.translate.setDefaultLang(defaultLang);
-    this.translate.use(defaultLang);
-
     this.getCategories();
     this.getAll();
-
-    this.imageUrl = environment.imageUrl;
   }
-
-  changeLanguage(lang: string) {
-    this.translate.use(lang);
-    localStorage.setItem('language', lang);
-  }
-
   // ürün işlemleri
 
   getAll() {

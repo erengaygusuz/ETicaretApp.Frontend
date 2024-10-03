@@ -6,15 +6,8 @@ import { CategoryService } from './services/category.service';
 import { NgForm } from '@angular/forms';
 import { SwalService } from '../../common/services/swal.service';
 import { CategoryPipe } from './pipes/category.pipe';
-import { LayoutsComponent } from '../layouts/layouts.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { NavbarComponent } from '../layouts/navbar/navbar.component';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient } from '@angular/common/http';
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, '/i18n/', '.json');
-}
+import { Page } from '../../base/page';
 
 @Component({
   selector: 'app-categories',
@@ -23,7 +16,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css',
 })
-export class CategoriesComponent implements OnInit {
+export class CategoriesComponent extends Page implements OnInit {
   categories: CategoryModel[] = [];
   updateCategory: CategoryModel = new CategoryModel();
   search: string = '';
@@ -32,18 +25,13 @@ export class CategoriesComponent implements OnInit {
     private _toastr: ToastrService,
     private _category: CategoryService,
     private _swal: SwalService,
-    private translate: TranslateService
-  ) {}
+    translate: TranslateService
+  ) {
+    super(translate);
+  }
 
   ngOnInit(): void {
     this.getAll();
-    const defaultLang = localStorage.getItem('language') || 'tr-TR';
-    this.translate.setDefaultLang(defaultLang);
-    this.translate.use(defaultLang);
-  }
-  changeLanguage(lang: string) {
-    this.translate.use(lang);
-    localStorage.setItem('language', lang);
   }
   getAll() {
     this._category.getAll((res) => (this.categories = res));

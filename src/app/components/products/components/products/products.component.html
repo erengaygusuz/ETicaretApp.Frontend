@@ -38,7 +38,7 @@
     <tr *ngFor="let product of result.datas; let index = index">
       <td>{{ index + 1 }}</td>
       <td>
-        <img [src]="imageUrl + product.imageUrls[0].path" width="50" />
+        <img [src]="imgUrl + product.imageUrls[0].path" width="50" />
       </td>
       <td>{{ product.name }}</td>
       <td>

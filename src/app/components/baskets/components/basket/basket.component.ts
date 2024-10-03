@@ -5,14 +5,9 @@ import { SwalService } from '../../../../common/services/swal.service';
 import { BasketService } from '../../services/basket.service';
 import { BasketModel } from '../../models/basket.model';
 import { OrderService } from '../../../orders/services/order.service';
-import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateService } from '@ngx-translate/core';
-import { environment } from '../../../../../environments/environment';
+import { Page } from '../../../../base/page';
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, '/i18n/', '.json');
-}
 
 @Component({
   selector: 'app-basket',
@@ -21,33 +16,22 @@ export function HttpLoaderFactory(http: HttpClient) {
   templateUrl: './basket.component.html',
   styleUrl: './basket.component.css',
 })
-export class BasketComponent implements OnInit {
+export class BasketComponent extends Page implements OnInit {
   baskets: BasketModel[] = [];
   sum: number = 0;
-  imageUrl: string = '';
 
   constructor(
     private _basket: BasketService,
     private _toastr: ToastrService,
     private _swal: SwalService,
     private _order: OrderService,
-    private translate: TranslateService
-  ) {}
+    translate: TranslateService
+  ) {
+    super(translate);
+  }
   ngOnInit(): void {
     this.getAll();
-
-    const defaultLang = localStorage.getItem('language') || 'tr-TR';
-    this.translate.setDefaultLang(defaultLang);
-    this.translate.use(defaultLang);
-
-    this.imageUrl = environment.imageUrl;
   }
-
-  changeLanguage(lang: string) {
-    this.translate.use(lang);
-    localStorage.setItem('language', lang);
-  }
-
   getAll() {
     this._basket.getAll((res) => {
       this.baskets = res;

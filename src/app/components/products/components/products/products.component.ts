@@ -7,13 +7,7 @@ import { SwalService } from '../../../../common/services/swal.service';
 import { ToastrService } from 'ngx-toastr';
 import { SharedModule } from '../../../../common/shared/shared.module';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../../environments/environment';
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, '/i18n/', '.json');
-}
+import { Page } from '../../../../base/page';
 
 @Component({
   selector: 'app-products',
@@ -22,32 +16,25 @@ export function HttpLoaderFactory(http: HttpClient) {
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent extends Page implements OnInit {
   result: PaginationResultModel<ProductModel[]> = new PaginationResultModel<
     ProductModel[]
   >();
   request: RequestModel = new RequestModel();
   pageNumbers: number[] = [];
   product: ProductModel = new ProductModel();
-  imageUrl: string = '';
 
   constructor(
     private _product: ProductService,
     private _swal: SwalService,
     private _toastr: ToastrService,
-    private translate: TranslateService
-  ) {}
+    translate: TranslateService
+  ) {
+    super(translate);
+  }
 
   ngOnInit(): void {
     this.getAll();
-    const defaultLang = localStorage.getItem('language') || 'tr-TR';
-    this.translate.setDefaultLang(defaultLang);
-    this.translate.use(defaultLang);
-    this.imageUrl = environment.imageUrl;
-  }
-  changeLanguage(lang: string) {
-    this.translate.use(lang);
-    localStorage.setItem('language', lang);
   }
 
   // ürünlerin sayfalanmış listesini alır
