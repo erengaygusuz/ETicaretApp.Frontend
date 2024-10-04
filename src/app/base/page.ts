@@ -1,12 +1,12 @@
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../environments/environment';
 
-export class Page {
+export abstract class Page {
   imgUrl: string;
   defaultLang: string;
   constructor(public translate: TranslateService) {
     this.languageConfiguration();
-    this.imageUpload();
+    this.setImageUrl();
   }
 
   languageConfiguration(): void {
@@ -15,8 +15,9 @@ export class Page {
     this.translate.use(this.defaultLang);
   }
 
-  imageUpload(): void {
+  setImageUrl(): void {
     this.imgUrl = environment.imgUrl;
+    console.log(this.imgUrl);
   }
 
   changeLanguage(lang: string) {

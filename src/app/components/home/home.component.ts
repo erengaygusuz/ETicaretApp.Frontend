@@ -40,10 +40,9 @@ export class HomeComponent extends Page implements OnInit {
   // ürün işlemleri
 
   getAll() {
-    this._product.getAllForHomePage(
-      this.request,
-      (res) => (this.products = res)
-    );
+    this._product.getAllForHomePage(this.request, (res) => {
+      this.products = res;
+    });
   }
 
   // kategori işlemleri
